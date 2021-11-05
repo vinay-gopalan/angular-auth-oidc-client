@@ -136,6 +136,9 @@ export interface OpenIdConfiguration {
   /** Extra parameters to add to the authorization URL request */
   customParamsAuthRequest?: { [key: string]: string | number | boolean };
 
+  /** Extra parameters to add to the authorization request header */
+  customAuthRequestHeaders?: {[key: string]: string }
+
   /** Extra parameters to add to the refresh token request body */
   customParamsRefreshTokenRequest?: { [key: string]: string | number | boolean };
 

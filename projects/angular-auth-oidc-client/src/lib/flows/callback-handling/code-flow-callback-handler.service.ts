@@ -74,10 +74,19 @@ export class CodeFlowCallbackHandlerService {
       return throwError('Token Endpoint not defined');
     }
 
+    const config = this.configurationProvider.getOpenIDConfiguration(configId);
+    const { customAuthRequestHeaders } = config;
+
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
-    const config = this.configurationProvider.getOpenIDConfiguration(configId);
+    if (customAuthRequestHeaders) {
+      const customHeaderKeys = Object.keys(customAuthRequestHeaders)
+
+      customHeaderKeys.forEach(key => {
+        headers = headers.set(key, customAuthRequestHeaders[key])
+      })
+    }
 
     const bodyForCodeFlow = this.urlService.createBodyForCodeFlowCodeRequest(
       callbackContext.code,
